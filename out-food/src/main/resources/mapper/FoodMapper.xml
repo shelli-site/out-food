@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mb.te.mapper.FoodMapper">
+    <select id="queryAll" resultType="mb.te.domain.Food">
+			SELECT
+				*
+			FROM
+				food
+    </select>
+</mapper>
