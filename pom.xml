@@ -17,6 +17,7 @@
         <module>eladmin-monitor</module>
         <module>eladmin-generator</module>
         <module>out-food</module>
+        <module>eladmin-start</module>
     </modules>
 
     <name>EL-ADMIN后台管理系统</name>
