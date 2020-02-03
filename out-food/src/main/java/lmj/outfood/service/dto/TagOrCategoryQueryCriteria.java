@@ -17,4 +17,12 @@ public class TagOrCategoryQueryCriteria{
     /** 模糊 */
     @Query(type = Query.Type.EQUAL)
     private String type;
+
+    public TagOrCategoryQueryCriteria() {
+    }
+
+    public TagOrCategoryQueryCriteria(String name, String type) {
+        this.name = name;
+        this.type = type;
+    }
 }

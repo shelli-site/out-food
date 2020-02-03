@@ -1,5 +1,6 @@
 package mb.te.service.dto;
 
+import lmj.outfood.domain.Picture;
 import lombok.Data;
 
 import java.util.List;
@@ -51,6 +52,8 @@ public class FoodVo {
      * 标签Id
      */
     private List<Long> tagIds;
+
+    private List<Picture> pictures;
 
     private Long sort;
 

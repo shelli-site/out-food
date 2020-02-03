@@ -32,8 +32,8 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/app/auth")
-@Api(tags = "[LMJ]：系统授权接口")
+@RequestMapping("/api/app_auth")
+@Api(tags = "[APP]：系统授权接口")
 public class APPLoginController {
 
     private final SecurityProperties properties;
@@ -52,8 +52,8 @@ public class APPLoginController {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
-    @Log("用户登录")
-    @ApiOperation("登录授权")
+    @Log("[APP]用户登录")
+    @ApiOperation("[APP]登录授权")
     @AnonymousAccess
     @PostMapping(value = "/login")
     public ResponseEntity<Object> login(@Validated @RequestBody AppAuthUser appAuthUser, HttpServletRequest request) {

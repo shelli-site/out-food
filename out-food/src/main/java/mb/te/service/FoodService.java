@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import mb.te.domain.Food;
 import mb.te.service.dto.FoodDto;
 import mb.te.service.dto.FoodQueryCriteria;
+import mb.te.service.dto.HomeFoodListVo;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,4 +17,6 @@ public interface FoodService extends IService<Food> {
     Map<String, Object> list(FoodQueryCriteria criteria, Pageable pageable);
 
     FoodDto get(Long id);
+
+    List<HomeFoodListVo> listAllFood();
 }
