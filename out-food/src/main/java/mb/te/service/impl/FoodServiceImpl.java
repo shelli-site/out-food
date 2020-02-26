@@ -62,6 +62,7 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
     @Override
     public List<HomeFoodListVo> listAllFood() {
         List<TagOrCategoryDto> types = tagOrCategoryService.queryAll(new TagOrCategoryQueryCriteria(null, "category"));
+        types.sort((type1, type2) -> (int) (type1.getSort() - type2.getSort()));
         List<HomeFoodListVo> result = types.stream().map(type -> new HomeFoodListVo(type.getId(), type.getName())).collect(Collectors.toList());
         List<FoodVo> foodVos = (List<FoodVo>) list(null, null).get("content");
         result.stream().forEach(type -> {

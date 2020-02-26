@@ -74,6 +74,7 @@ public class AppStatusController {
                     break;
             }
         });
+        versionUpdateRecords.sort((versionUpdateRecord1, versionUpdateRecord2) -> (int) (Integer.parseInt(versionUpdateRecord1.getSort()) - Integer.parseInt(versionUpdateRecord2.getSort())));
         appStatus.setVersionUpdateRecords(versionUpdateRecords);
         return appStatus;
     }
