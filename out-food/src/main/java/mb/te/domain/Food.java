@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 public class Food extends Model<Food> implements Serializable {
 
-    @TableId(value = "id",type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
