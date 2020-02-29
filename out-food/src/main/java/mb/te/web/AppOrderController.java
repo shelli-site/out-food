@@ -3,6 +3,7 @@ package mb.te.web;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lmj.outfood.annotation.AnonymousAccess;
 import lmj.outfood.aop.log.Log;
 import mb.te.service.OrderService;
 import mb.te.service.dto.OrderQueryCriteria;
@@ -52,6 +53,14 @@ public class AppOrderController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<Object> paidOrder(@PathVariable Long id) {
         return new ResponseEntity<>(orderService.paidOrder(id), HttpStatus.OK);
+    }
+
+    @Log("[APP]用户获取订单详情")
+    @ApiOperation("[APP]获取订单详情")
+    @PreAuthorize("@el.check('order:get')")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Object> getOrder(@PathVariable Long id) {
+        return new ResponseEntity<>(orderService.getOrderById(id), HttpStatus.OK);
     }
 
 

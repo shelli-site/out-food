@@ -10,6 +10,7 @@ import mb.te.domain.OrderFood;
 import mb.te.mapper.OrderMapper;
 import mb.te.service.OrderFoodService;
 import mb.te.service.OrderService;
+import mb.te.service.dto.OrderGetVo;
 import mb.te.service.dto.OrderListVo;
 import mb.te.service.dto.OrderQueryCriteria;
 import mb.te.service.dto.OrderSubmitVo;
@@ -41,6 +42,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
      * @Return: java.util.Map<java.lang.String,java.lang.Object>
      * Created By shenxi On 2020/2/27 23:41
      **/
+    @Override
     @Transactional
     public Map<String, Object> submitOrder(OrderSubmitVo orderSubmitVo) {
         Map<String, Object> result = new HashMap<>();
@@ -69,6 +71,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
      * @Return: java.util.Map<java.lang.String,java.lang.Object>
      * Created By shenxi On 2020/2/27 23:41
      **/
+    @Override
     @Transactional
     public Map<String, Object> paidOrder(Long id) {
         Map<String, Object> result = new HashMap<>();
@@ -77,6 +80,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         return result;
     }
 
+    @Override
     public Map<String, Object> list(OrderQueryCriteria criteria, Page page) {
         Map<String, Object> result = new HashMap<>();
         criteria.setUserId(userService.findByName(SecurityUtils.getUsername()).getId());
@@ -88,6 +92,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         return result;
     }
 
+    @Override
+    public OrderGetVo getOrderById(Long id) {
+        return orderMapper.queryOrder(id);
+    }
     /*
      * Optional.ofNullable("not Null").orElse("is Null");
      * result : "not Null"
