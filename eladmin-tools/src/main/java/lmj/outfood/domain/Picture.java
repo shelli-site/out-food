@@ -1,5 +1,6 @@
 package lmj.outfood.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -38,6 +39,7 @@ public class Picture implements Serializable {
     private String username;
 
     @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "create_time")
     private Timestamp createTime;
 

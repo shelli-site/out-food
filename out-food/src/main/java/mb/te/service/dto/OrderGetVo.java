@@ -1,9 +1,11 @@
 package mb.te.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 import mb.te.domain.OrderFood;
+import mb.te.util.JsonParseUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,7 @@ public class OrderGetVo {
     private Float packingCost;
     private Float priceTotal;
     private String tableNum;
+    @JsonSerialize(using = JsonParseUtil.class)
     private String extra;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date orderStartTime;

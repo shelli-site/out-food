@@ -31,7 +31,7 @@ public class AppOrderController {
 
     @Log("[APP]用户获取订单列表")
     @ApiOperation("[APP]获取订单列表")
-    @PreAuthorize("@el.check('order:list')")
+    @PreAuthorize("@el.check('app_order:list')")
     @GetMapping
     public ResponseEntity<Object> listOrder(OrderQueryCriteria criteria,
                                             @RequestParam(value = "pageSize", required = false) Long pageSize,
@@ -41,7 +41,7 @@ public class AppOrderController {
 
     @Log("[APP]用户提交订单")
     @ApiOperation("[APP]提交订单")
-    @PreAuthorize("@el.check('order:submit')")
+    @PreAuthorize("@el.check('app_order:submit')")
     @PostMapping
     public ResponseEntity<Object> submitOrder(@Validated @RequestBody OrderSubmitVo orderSubmitVo) {
         return new ResponseEntity<>(orderService.submitOrder(orderSubmitVo), HttpStatus.OK);
@@ -49,7 +49,7 @@ public class AppOrderController {
 
     @Log("[APP]用户支付订单")
     @ApiOperation("[APP]支付订单")
-    @PreAuthorize("@el.check('order:paid')")
+    @PreAuthorize("@el.check('app_order:paid')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<Object> paidOrder(@PathVariable Long id) {
         return new ResponseEntity<>(orderService.paidOrder(id), HttpStatus.OK);
@@ -57,7 +57,7 @@ public class AppOrderController {
 
     @Log("[APP]用户获取订单详情")
     @ApiOperation("[APP]获取订单详情")
-    @PreAuthorize("@el.check('order:get')")
+    @PreAuthorize("@el.check('app_order:get')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> getOrder(@PathVariable Long id) {
         return new ResponseEntity<>(orderService.getOrderById(id), HttpStatus.OK);

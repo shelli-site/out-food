@@ -36,6 +36,8 @@
 						'待支付'
 						WHEN o.`status` = 'paid' THEN
 						'待评价'
+						WHEN o.`status` = 'cancel' THEN
+						'已取消'
 						WHEN o.`status` = 'done' THEN
 						'已完成' ELSE '订单异常'
 					END
