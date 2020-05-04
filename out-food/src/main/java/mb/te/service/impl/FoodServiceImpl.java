@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lmj.outfood.domain.Picture;
+import lmj.outfood.modules.system.service.UserService;
 import lmj.outfood.service.PictureService;
 import lmj.outfood.service.TagOrCategoryService;
 import lmj.outfood.service.dto.PictureQueryCriteria;
 import lmj.outfood.service.dto.TagOrCategoryDto;
 import lmj.outfood.service.dto.TagOrCategoryQueryCriteria;
+import lmj.outfood.utils.SecurityUtils;
 import lmj.outfood.utils.StringUtils;
 import mb.te.domain.Food;
 import mb.te.mapper.FoodMapper;
@@ -32,6 +34,8 @@ import java.util.stream.Collectors;
 public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements FoodService {
     @Autowired
     FoodMapper foodMapper;
+    @Autowired
+    UserService userService;
     @Autowired
     TagOrCategoryService tagOrCategoryService;
     @Autowired
@@ -68,6 +72,18 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
         result.stream().forEach(type -> {
             type.setFoodList(toAppHomeVo(type.getCategoryId(), foodVos));
         });
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> listHistoryFood(Page page) {
+        Map<String, Object> result = new HashMap<>();
+        Long currentUserId = userService.findByName(SecurityUtils.getUsername()).getId();
+        IPage<HomeFoodVo> homeFoodVoIPage = foodMapper.queryHistory(currentUserId, page);
+        result.put("list", homeFoodVoIPage.getRecords());
+        result.put("pageTotal", homeFoodVoIPage.getTotal());
+        result.put("pageNo", homeFoodVoIPage.getCurrent());
+        result.put("pageSize", homeFoodVoIPage.getPages());
         return result;
     }
 
@@ -130,9 +146,24 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements Fo
         foodVo.setTagNames(Objects.isNull(foodVo.getTagIds()) ? null : tagOrCategoryDtos.stream().filter(t ->
                 foodVo.getTagIds().indexOf(t.getId()) != -1).map(t -> t.getName()).collect(Collectors.toList()));
         foodVo.setPictures(
-                Objects.isNull(food.getPictureIds()) ? null :
-                        pictures.stream().filter(pic ->
-                                Arrays.asList(food.getPictureIds().split(",")).stream().map(t -> Long.parseLong(t)).collect(Collectors.toList()).indexOf(pic.getId()) != -1
+                Objects.isNull(food.getPictureIds()) ? null : // 也有可能为 "" ,应该加上  || "".equals(food.getPictureIds())
+                        pictures.stream().filter(pic -> {
+                                    String[] pIds = food.getPictureIds().split(",");
+                                    List<Long> pIdList = new ArrayList<>();
+                                    for (int i = 0; i < pIds.length; i++) {
+                                        if (pIds[i] != null && pIds[i] != "") {
+                                            try {
+                                                pIdList.add(Long.parseLong(pIds[i]));
+                                            } catch (NumberFormatException e) {
+                                                log.error(String.format("数字格式化异常{0},{1}", food, pic), e);
+                                            }
+                                        }
+                                    }
+                                    return pIdList.contains(pic.getId());
+                                    /*Arrays.asList(food.getPictureIds().split(",")).stream().map(t -> Long.parseLong(t))
+                                            .collect(Collectors.toList())
+                                            .indexOf(pic.getId()) != -1*/
+                                }
                         ).collect(Collectors.toList()));
         return foodVo;
     }

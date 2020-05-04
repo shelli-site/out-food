@@ -1,5 +1,6 @@
 package mb.te.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import mb.te.domain.Food;
 import mb.te.service.dto.FoodDto;
@@ -19,4 +20,6 @@ public interface FoodService extends IService<Food> {
     FoodDto get(Long id);
 
     List<HomeFoodListVo> listAllFood();
+
+    Map<String, Object> listHistoryFood(Page page);
 }

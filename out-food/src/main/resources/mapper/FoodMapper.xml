@@ -7,4 +7,21 @@
 			FROM
 				food
     </select>
+    <select id="queryHistory" resultType="mb.te.service.dto.HomeFoodVo">
+			SELECT
+				DISTINCT
+				f.id AS foodId,
+				f.name AS foodName,
+				f.price,
+				f.monthly_sales_volume,
+				p.url AS pictureUrl,
+				p.id AS pictureId
+			FROM
+				food f
+				LEFT JOIN order_food of ON f.id = of.food_id
+				LEFT JOIN `order` o ON o.id = of.order_id
+				LEFT JOIN picture p ON FIND_IN_SET( p.id, f.picture_ids )
+			WHERE
+				o.user_id = #{currentUserId}
+    </select>
 </mapper>

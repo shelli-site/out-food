@@ -62,7 +62,7 @@
         FROM
         remark r
         LEFT JOIN picture p ON FIND_IN_SET( p.id, r.picture_ids )
-        LEFT JOIN USER u ON u.id = ( SELECT user_id FROM `order` WHERE `order`.id = r.order_id )
+        LEFT JOIN `user` u ON u.id = ( SELECT user_id FROM `order` WHERE `order`.id = r.order_id )
         LEFT JOIN user_avatar ua ON ua.id = u.avatar_id
     </select>
 

@@ -1,6 +1,5 @@
 package mb.te.service.dto;
 
-import lmj.outfood.service.dto.TagOrCategoryDto;
 import lombok.Data;
 
 import java.util.List;
